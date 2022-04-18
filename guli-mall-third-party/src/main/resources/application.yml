@@ -11,8 +11,8 @@ spring:
         dashboard: localhost:8082
         port: 8719
     alicloud:
-      access-key: LTAI5tSpBk5kS3HV8UDXTPjY
-      secret-key: DA1cYnfbbQNpRVMXOPIif0TMp7DtoO
+      access-key: 
+      secret-key: 
       oss:
         endpoint: oss-cn-guangzhou.aliyuncs.com
         bucketName: zjw-guli-mall
