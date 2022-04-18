@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: guli-mall-gateway-service
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      config:
+        file-extension: yaml
+        group: DEV_GROUP
+        namespace: 9d3f10c6-1c57-4cd1-bf94-339c21bca12b
+      server-addr: 127.0.0.1:8848

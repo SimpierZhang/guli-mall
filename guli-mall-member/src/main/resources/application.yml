@@ -1,0 +1,41 @@
+
+spring:
+  application:
+    name: guli-mall-member-service
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8082
+        port: 8719
+  session:
+    store-type: redis #将session数据存入redis中用于分布式session，但是还需要加上配置文件扩大作用域和序列化机制
+    timeout: 30m #指定session失效时间为30min
+  thymeleaf:
+    cache: false
+    suffix: .html
+    prefix: classpath:/templates/
+  redis:
+    host: 192.168.233.216
+    port: 6379
+  datasource:
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.233.216:3306/gulimall_ums?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml
+  global-config:
+    db-config:
+      logic-delete-value: 1 #逻辑已经删除
+      logic-not-delete-value: 0 #逻辑未删除
+      id-type: auto
+server:
+  port: 8000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

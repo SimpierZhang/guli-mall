@@ -1,0 +1,52 @@
+
+spring:
+  session:
+    store-type: redis #将session数据存入redis中用于分布式session，但是还需要加上配置文件扩大作用域和序列化机制
+    timeout: 30m #指定session失效时间为30min
+  redis:
+    host: 192.168.233.216
+    port: 6379
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8082
+        port: 8719
+  application:
+    name: guli-mall-ware-service
+  datasource:
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.233.216:3306/gulimall_wms?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+  gson:
+    date-format: yyyy-MM-dd HH:mm:ss
+  rabbitmq:
+    host: 192.168.233.216
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+    publisher-returns: true #设置消息发送到queue的回调开启
+    publisher-confirms: true #设置消息发送到exchange的回调开启
+    listener:
+      simple:
+        acknowledge-mode: manual #设置手动确认
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml
+  global-config:
+    db-config:
+      logic-delete-value: 1 #逻辑已经删除
+      logic-not-delete-value: 0 #逻辑未删除
+      id-type: auto
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+server:
+  port: 11090
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

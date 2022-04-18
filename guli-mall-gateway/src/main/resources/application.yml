@@ -1,0 +1,94 @@
+spring:
+  application:
+    name: guli-mall-gateway-service
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1:8848
+    gateway:
+      routes:
+      - id: product_route
+        uri: lb://guli-mall-product-service
+        predicates:
+          - Path=/api/product/**
+        filters:
+          - RewritePath=/api/?(?<segment>.*), /$\{segment}
+
+      - id: thirdparty_route
+        uri: lb://guli-mall-thirdparty-service
+        predicates:
+          - Path=/api/thirdparty/**
+        filters:
+          - RewritePath=/api/?(?<segment>.*), /$\{segment}
+
+      - id: coupon_route
+        uri: lb://guli-mall-coupon-service
+        predicates:
+          - Path=/api/coupon/**
+        filters:
+          - RewritePath=/api/?(?<segment>.*), /$\{segment}
+
+      - id: member_route
+        uri: lb://guli-mall-member-service
+        predicates:
+          - Path=/api/member/**
+        filters:
+          - RewritePath=/api/?(?<segment>.*), /$\{segment}
+      - id: member_route
+        uri: lb://guli-mall-member-service
+        predicates:
+          - Host=member.gulimall.com
+
+
+      - id: ware_route
+        uri: lb://guli-mall-ware-service
+        predicates:
+          - Path=/api/ware/**
+        filters:
+          - RewritePath=/api/?(?<segment>.*), /$\{segment}
+
+      - id: admin_route
+        uri: lb://guli-mall-renrenfast-service
+        predicates:
+          - Path=/api/**
+        filters:
+          - RewritePath=/api/?(?<segment>.*), /renren-fast/$\{segment}
+
+
+
+      - id: gulimall_search_route
+        uri: lb://guli-mall-search-service
+        predicates:
+          - Host=search.gulimall.com
+
+      - id: gulimall_auth_route
+        uri: lb://guli-mall-auth-service
+        predicates:
+          - Host=auth.gulimall.com
+
+      - id: gulimall_cart_route
+        uri: lb://guli-mall-cart-service
+        predicates:
+          - Host=cart.gulimall.com
+
+      - id: gulimall_order_route
+        uri: lb://guli-mall-order-service
+        predicates:
+          - Host=order.gulimall.com, testzjw.vaiwan.com
+
+      - id: gulimall_seckill_route
+        uri: lb://guli-mall-seckill-service
+        predicates:
+          - Host=seckill.gulimall.com
+
+      #商品和详情页都要转到商品服务
+      - id: gulimall_host_route
+        uri: lb://guli-mall-product-service
+        predicates:
+          - Host=item.gulimall.com,gulimall.com
+        #http://localhost:88/api/captcha.jpg ==> 符合网关断言那么就会去注册中心找相应的服务
+        #即url会变成http://guli-mall-renrenfast-service：8080/api/captcha.jpg
+        #但是由于renrenfast这个服务本身请求验证码是无需api前缀的，因此我们需要将
+        #http://guli-mall-renrenfast-service：8080/api/captcha.jpg ==》 http://guli-mall-renrenfast-service:8080/captcha.jpg
+        #这个功能可以采用重写路径过滤器完成
+server:
+  port: 88

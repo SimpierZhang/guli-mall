@@ -1,0 +1,35 @@
+elasticsearch:
+  host: 192.168.233.216
+  port: 9200
+
+server:
+  port: 13000
+spring:
+  application:
+    name: guli-mall-search-service
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8082
+        port: 8719
+  redis:
+    host: 192.168.233.216
+    port: 6379
+  thymeleaf:
+    cache: false
+    suffix: .html
+    prefix: classpath:/templates/
+  session:
+    store-type: redis #将session数据存入redis中用于分布式session，但是还需要加上配置文件扩大作用域和序列化机制
+    timeout: 30m #指定session失效时间为30min
+
+logging:
+  level:
+    com.zjw.gulimall: debug
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
